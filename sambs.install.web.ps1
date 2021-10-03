@@ -19,7 +19,7 @@ function New-SambsInstallerPath {
 }
 
 # Get all the sambs.installer on the Path
-[string[]]$sambsInstallerFilePaths = Get-Command sambs.install -CommandType Application -ShowCommandInfo -ErrorAction SilentlyContinue | ForEach-Object {
+[string[]]$sambsInstallerFilePaths = Get-Command sambs.install.cmd -CommandType Application -ShowCommandInfo -ErrorAction SilentlyContinue | ForEach-Object {
     return $_.Definition
 }
 
@@ -37,9 +37,10 @@ if ($sambsInstallerFilePaths.Count -ile 0) {
     Copy-Item -Path $sambsInstallerPath/sambsawsdev-sambs-installer-* -Destination $sambsInstallerPath/sambs-installer -Recurse -Force
     Remove-Item -Path $sambsInstallerZipFilePath, $sambsInstallerPath/sambsawsdev-sambs-installer-* -Recurse -Force
     
-    $sambsInstallerFilePaths += Join-Path -Path $sambsInstallerPath -ChildPath 'sambs-installer/sambs-installer.cmd'
+    $sambsInstallerFilePaths += Join-Path -Path $sambsInstallerPath -ChildPath 'sambs-installer/sambs.install.cmd'
 }
 
 # Run the installer
-Invoke-Expression $sambsInstallerFilePaths[0] 
+Invoke-Expression ". `"$($sambsInstallerFilePaths[0])`""
+#Start-Process powershell -ArgumentList "-File `"$($sambsInstallerFilePaths[0])`"" -PassThru -NoNewWindow -Wait
 #Write-Output $sambsInstallerFilePaths[0]
