@@ -10,7 +10,7 @@ if /I [help]==[%helpCheck%] goto :Show_Help
 
 :Start_Powershell
 echo Starting powershell script: sambs.install.ps1 %fParam% %2
-powershell -NoProfile -InputFormat None -ExecutionPolicy Bypass -File .\sambs.install.ps1 %fParam% %2
+powershell -NoProfile -InputFormat None -ExecutionPolicy Bypass -File %~dp0\sambs.install.ps1 %fParam% %2
 set sambsInstallErrorCode = %errorLevel%
 
 :Done
