@@ -16,6 +16,9 @@ function Install-DefaultApps {
             # Install sambs bucket
             Install-Bucket -bucket 'sambs' -bucketRepo 'https://github.com/sambsawsdev/sambs-scoop'
 
+            # Install sambs-installer
+            Install-App -app 'sambs-installer' $ignoreUpdate
+
             # Install extras bucket
             #Install-Bucket -bucket 'extras'
 
