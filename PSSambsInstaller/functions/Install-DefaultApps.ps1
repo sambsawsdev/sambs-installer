@@ -19,8 +19,11 @@ function Install-DefaultApps {
             # Install sambs-installer
             Install-App -app 'sambs-installer' $ignoreUpdate
 
+            #Install python
+            Install-App -app 'python' $ignoreUpdate
+            
             # Install extras bucket
-            #Install-Bucket -bucket 'extras'
+            Install-Bucket -bucket 'extras'
 
             $logger.debug('Completed.')
         } catch {
