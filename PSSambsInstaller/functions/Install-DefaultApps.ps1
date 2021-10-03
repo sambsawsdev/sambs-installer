@@ -24,6 +24,9 @@ function Install-DefaultApps {
             
             # Install extras bucket
             Install-Bucket -bucket 'extras'
+            
+            # Install git-remote-codecommit
+            Invoke-Expression 'pip install git-remote-codecommit'
 
             $logger.debug('Completed.')
         } catch {
