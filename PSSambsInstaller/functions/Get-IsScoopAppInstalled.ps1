@@ -1,4 +1,4 @@
-function Get-IsAppInstalled {
+function Get-IsScoopAppInstalled {
     Param (
         [Parameter(Mandatory=$true, Position=0)]
         [string]$app

@@ -9,24 +9,25 @@ function Install-DefaultApps {
             $logger.debug("Starting. [$ignoreUpdate]")
 
             # Install Git
-            Install-App -app 'git' $ignoreUpdate
-            # Install AWS
-            Install-App -app 'aws' $ignoreUpdate
+            Install-ScoopApp -app 'git' $ignoreUpdate
 
             # Install sambs bucket
             Install-Bucket -bucket 'sambs' -bucketRepo 'https://github.com/sambsawsdev/sambs-scoop'
-
             # Install sambs-installer
-            Install-App -app 'sambs-installer' $ignoreUpdate
+            Install-ScoopApp -app 'sambs-installer' $ignoreUpdate
+
+            # Install AWS
+            Install-ScoopApp -app 'aws' $ignoreUpdate
 
             #Install python
-            Install-App -app 'python' $ignoreUpdate
+            Install-ScoopApp -app 'python' $ignoreUpdate
+            # Update pip using pip
+            Install-PipApp -app 'pip' $ignoreUpdate
+            # Install git-remote-codecommit
+            Install-PipApp -app 'git-remote-codecommit' $ignoreUpdate
             
             # Install extras bucket
             Install-Bucket -bucket 'extras'
-            
-            # Install git-remote-codecommit
-            Invoke-Expression 'pip install git-remote-codecommit'
 
             $logger.debug('Completed.')
         } catch {

@@ -1,4 +1,4 @@
-function Install-App {
+function Install-PipApp {
     Param (
         [Parameter(Mandatory=$true, Position=0)]
         [string]$app,
@@ -10,25 +10,26 @@ function Install-App {
         try {
             $logger.debug("Starting. [$app]")
 
-            # Ensure scoop is installed
-            if ( -not (Get-IsScoopInstalled) ) {
-                throw "Scoop is required to install apps"
+            # Ensure pip is installed
+            if ( -not (Get-IsPipInstalled) ) {
+                throw "Pip is required to install apps"
             }
 
             # Check if the app is installed
-            if ( Get-IsAppInstalled -app $app ) {
+            if ( Get-IsPipAppInstalled -app $app ) {
                 $logger.info("$app is already installed.")
 
+                #--disable-pip-version-check
                 if ( -not $ignoreUpdate ) {
                     # Update the already installed app.
                     $logger.info("$app is already installed.  Checking for updates starting...`n")
-                    Invoke-Expression "scoop update $app"
+                    Invoke-Expression "pip --disable-pip-version-check install --upgrade $app"
                     $logger.info("$app checking for updates completed.")
                 }
             } else {
                 # Install the app
                 $logger.info("$app installer starting...`n")
-                Invoke-Expression "scoop install $app"
+                Invoke-Expression "pip --disable-pip-version-check install $app"
                 $logger.info("$app installer completed.")                
             }
             
