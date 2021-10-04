@@ -19,11 +19,11 @@ function Install-Bucket {
                 $logger.info("$bucket bucket is already installed.")
             } else {
                 # Git is required for install bucket
-                if ( -not (Get-IsAppInstalled -app 'git') ) {
+                if ( -not (Get-IsScoopAppInstalled -app 'git') ) {
                     # Install git
                     $logger.info('Git is required for bucket install.')
                     $logger.info('Installing git starting...')
-                    Install-App -app 'git' $ignoreUpdate
+                    Install-ScoopApp -app 'git' $ignoreUpdate
                     $logger.info('Installing git completed.')
                 }
                 

@@ -28,11 +28,11 @@ function Install-Scoop {
 
                 if ( -not $ignoreUpdate ) {
                     # Git is required for update
-                    if ( -not (Get-IsAppInstalled -app 'git') ) {
+                    if ( -not (Get-IsScoopAppInstalled -app 'git') ) {
                         # Install git
                         $logger.info('Git is required for updates.')
                         $logger.info('Installing git starting...')
-                        Install-App -app 'git' $ignoreUpdate
+                        Install-ScoopApp -app 'git' $ignoreUpdate
                         $logger.info('Installing git completed.')
                     }
 
