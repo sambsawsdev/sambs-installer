@@ -1,0 +1,13 @@
+{
+    "buckets": [
+        { "name": "extras" },
+        { "name": "sambs", "repo": "https://github.com/sambsawsdev/sambs-scoop"}
+    ],
+    "scoopApps": [
+        { "app": "git" },
+        { "app": "heidisql" },
+        { "app": "postman" }
+    ],
+    "pipApps": [
+    ]
+}

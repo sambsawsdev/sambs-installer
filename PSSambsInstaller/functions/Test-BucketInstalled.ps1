@@ -1,4 +1,4 @@
-function Get-IsBucketInstalled {
+function Test-BucketInstalled {
     Param (
         [Parameter(Mandatory=$true, Position=0)]
         [string]$bucket
@@ -9,7 +9,7 @@ function Get-IsBucketInstalled {
             $logger.debug("Starting. [$bucket]")
 
             # Ensure scoop is installed
-            if ( -not (Get-IsScoopInstalled) ) {
+            if ( -not (Test-ScoopInstalled) ) {
                 throw "Scoop is required to check if buckets are installed."
             }
 

@@ -11,12 +11,12 @@ function Install-ScoopApp {
             $logger.debug("Starting. [$app]")
 
             # Ensure scoop is installed
-            if ( -not (Get-IsScoopInstalled) ) {
+            if ( -not (Test-ScoopInstalled) ) {
                 throw "Scoop is required to install apps"
             }
 
             # Check if the app is installed
-            if ( Get-IsScoopAppInstalled -app $app ) {
+            if ( Test-ScoopAppInstalled -app $app ) {
                 $logger.info("$app is already installed.")
 
                 if ( -not $ignoreUpdate ) {

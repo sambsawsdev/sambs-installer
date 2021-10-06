@@ -12,7 +12,19 @@ class Logger {
     Logger([LoggingLevel]$loggingLevel) {
         $this.loggingLevel = $loggingLevel
     }
-    
+
+    [void] showHelp($help) {
+        $caller = (Get-PSCallStack)[1].Command
+
+        # Format the message
+        [string]$formattedMessage = "$(Get-Date -UFormat '%Y/%m/%d %T' ) [$caller] -HELP-:
+$($help.usage)
+
+$($help.example)"
+        # Output the message
+        Write-Host $formattedMessage -ForegroundColor 'White'
+    }
+
     [void] hidden log([LoggingLevel]$level, [string]$message, [string]$caller) {
         try {
             # Logging is switched off or at lower level

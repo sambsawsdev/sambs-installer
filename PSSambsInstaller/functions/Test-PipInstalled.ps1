@@ -1,4 +1,4 @@
-function Get-IsPipInstalled {
+function Test-PipInstalled {
     Process {
         try {
             $logger.debug('Starting.')

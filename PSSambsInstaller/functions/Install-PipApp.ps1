@@ -11,12 +11,12 @@ function Install-PipApp {
             $logger.debug("Starting. [$app]")
 
             # Ensure pip is installed
-            if ( -not (Get-IsPipInstalled) ) {
+            if ( -not (Test-PipInstalled) ) {
                 throw "Pip is required to install apps"
             }
 
             # Check if the app is installed
-            if ( Get-IsPipAppInstalled -app $app ) {
+            if ( Test-PipAppInstalled -app $app ) {
                 $logger.info("$app is already installed.")
 
                 #--disable-pip-version-check
