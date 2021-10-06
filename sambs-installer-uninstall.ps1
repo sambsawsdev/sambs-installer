@@ -6,7 +6,7 @@ Begin {
     $logger.info('Sambs Uninstaller starting...')
 
     # Set sambsHome
-    [string]$sambsHome = Set-SambsHome -sambsHome $sambsHome
+    [string]$sambsHome = $env:sambsHome
 }
 
 Process {
