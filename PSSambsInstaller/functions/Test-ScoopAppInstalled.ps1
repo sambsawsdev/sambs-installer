@@ -1,4 +1,4 @@
-function Get-IsPipAppInstalled {
+function Test-ScoopAppInstalled {
     Param (
         [Parameter(Mandatory=$true, Position=0)]
         [string]$app
@@ -8,14 +8,14 @@ function Get-IsPipAppInstalled {
         try {
             $logger.debug("Starting. [$app]")
 
-            # Ensure pip is installed
-            if ( -not (Get-IsPipInstalled) ) {
-                throw "Pip is required to check if apps are installed."
+            # Ensure scoop is installed
+            if ( -not (Test-ScoopInstalled) ) {
+                throw "Scoop is required to check if apps are installed."
             }
 
             # Get the list of installed apps using scoop export
             [bool]$isInstalled = $false
-            [string[]]$apps = Invoke-Expression 'pip --disable-pip-version-check list' | ForEach-Object { return $_.split(" ")[0].ToLower() }
+            [string[]]$apps = Invoke-Expression 'scoop export' | ForEach-Object { return $_.split(" ")[0].ToLower() }
             if ($null -ne $apps) {
                 $isInstalled = $apps.Contains($app.ToLower())
             }

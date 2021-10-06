@@ -18,9 +18,9 @@ Process {
         if ($confirmUninstall -ieq 'y') {
             # Uninstall Pip Apps
             # Check if pip is installed
-            if ( Get-IsPipInstalled ) {
+            if ( Test-PipInstalled ) {
                 # Check if git-remote-codecommit is installed
-                if (Get-IsPipAppInstalled -app 'git-remote-codecommit') {
+                if (Test-PipAppInstalled -app 'git-remote-codecommit') {
                     # Uninstall git-remote-codecommit
                     $logger.info('Uninstalling git-remote-codecommit starting...')
                     Invoke-Expression 'pip uninstall git-remote-codecommit --yes'
@@ -29,7 +29,7 @@ Process {
             }
 
             # Check if scoop is installed
-            if ( Get-IsScoopInstalled ) {
+            if ( Test-ScoopInstalled ) {
                 # Uninstall scoop.  This will uninstall scoop and all apps installed by scoop
                 $logger.info('Uninstalling scoop starting...')
                 # Todo: Force the uninstall!!

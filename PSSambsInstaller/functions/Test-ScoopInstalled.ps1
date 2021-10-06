@@ -1,4 +1,4 @@
-function Get-IsScoopInstalled {
+function Test-ScoopInstalled {
     Process {
         try {
             $logger.debug('Starting.')

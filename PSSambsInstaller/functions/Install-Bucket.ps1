@@ -11,15 +11,15 @@ function Install-Bucket {
             $logger.debug("Starting. [$bucket, $bucketRepo]")
 
             # Ensure scoop is installed
-            if ( -not (Get-IsScoopInstalled) ) {
+            if ( -not (Test-ScoopInstalled) ) {
                 throw "Scoop is required to install buckets."
             }
 
-            if ( Get-IsBucketInstalled -bucket $bucket ) {
+            if ( Test-BucketInstalled -bucket $bucket ) {
                 $logger.info("$bucket bucket is already installed.")
             } else {
                 # Git is required for install bucket
-                if ( -not (Get-IsScoopAppInstalled -app 'git') ) {
+                if ( -not (Test-ScoopAppInstalled -app 'git') ) {
                     # Install git
                     $logger.info('Git is required for bucket install.')
                     $logger.info('Installing git starting...')

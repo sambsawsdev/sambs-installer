@@ -1,0 +1,14 @@
+{
+    "buckets": [
+        { "name": "sambs", "repo": "https://github.com/sambsawsdev/sambs-scoop"}
+    ],
+    "scoopApps": [
+        { "app": "git" },
+        { "app": "sambs-installer" },
+        { "app": "nvs" },
+        { "app": "python" }
+    ],
+    "pipApps": [
+        { "app": "git-remote-codecommit" }
+    ]
+}
