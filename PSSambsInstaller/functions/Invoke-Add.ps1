@@ -1,7 +1,7 @@
 function Invoke-Add {
     Param (
         [Parameter(Mandatory=$false, Position=0)]
-        [string[]]$packages='help',
+        [string[]]$packages,
         [Parameter(Mandatory=$false, ValueFromRemainingArguments=$true)]
         [Object[]]$arguments    
     )
@@ -25,7 +25,7 @@ Where:
             $logger.debug("Starting. [$packages, $arguments]")
 
             # Show help
-            if ($packages -ieq 'help') {
+            if ([string]::IsNullOrWhiteSpace($packages)) {
                 $logger.showHelp($help)
                 return
             }
