@@ -5,6 +5,7 @@
     "scoopApps": [
         { "app": "git" },
         { "app": "sambs-installer" },
+        { "app": "aws" },
         { "app": "nvs" },
         { "app": "python" }
     ],
