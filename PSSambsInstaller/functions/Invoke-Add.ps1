@@ -14,9 +14,9 @@ function Invoke-Add {
 Where:
     packages    The Uri(s) to the json definition of the package(s)'
             example = 'Example: 
-    sambs-installer add https://github.com/sambsawsdev/sambs-installer/blob/main/package/sambs.json
-    sambs-installer add C:\Users\sambs\.sambs\scoop\apps\sambs-installer\current\package\sambs.json
-    sambs-installer add -packages ./sambs.json, ./sbsa.json'
+    sambs-installer add "https://github.com/sambsawsdev/sambs-installer/blob/main/package/sambs.json"
+    sambs-installer add "C:\Users\sambs\.sambs\scoop\apps\sambs-installer\current\package\sambs.json"
+    sambs-installer add -packages "./sambs.json, ./sbsa.json"'
         }
     }
 
@@ -25,7 +25,7 @@ Where:
             $logger.debug("Starting. [$packages, $arguments]")
 
             # Show help
-            if ([string]::IsNullOrWhiteSpace($packages)) {
+            if ([string]::IsNullOrWhiteSpace($packages) -or $packages -ieq 'help') {
                 $logger.showHelp($help)
                 return
             }

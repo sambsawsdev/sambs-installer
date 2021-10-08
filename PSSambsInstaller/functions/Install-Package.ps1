@@ -17,7 +17,7 @@ function Install-Package {
 
     Process {
         try {
-            $logger.debug('Started.')
+            $logger.debug("Starting. [$packageFilePath, $arguments]")
 
             # Throw error if package is not found
             if ( -not ( Test-Path -LiteralPath $packageFilePath -PathType Leaf ) ) {

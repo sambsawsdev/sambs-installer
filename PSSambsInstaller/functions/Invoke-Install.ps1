@@ -14,23 +14,22 @@ function Invoke-Install {
 Where:
     packages    The name(s) of the package(s)'
             example = 'Example: 
-    sambs-installer install sambs
-    sambs-installer install -packages sambs, sbsa'
+    sambs-installer install "sambs"
+    sambs-installer install -packages "sambs, sbsa"'
         }
     }
 
     Process {
         try {
-            $logger.debug("Started. [$packages, $arguments]")
+            $logger.debug("Starting. [$packages, $arguments]")
 
             # Show help
-            if ([string]::IsNullOrWhiteSpace($packages)) {
+            if ([string]::IsNullOrWhiteSpace($packages) -or $packages -ieq 'help') {
                 $logger.showHelp($help)
                 return
             }
 
-            # Todo: Update Scoop
-            
+            # Todo: Update Scoop            
 
             # Loop through all the packages
             foreach($package in $packages) {

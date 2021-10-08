@@ -17,11 +17,12 @@ Process {
         
         # Invoke the appropriate command
         switch ($command.ToLower()) {
-            'help' { Invoke-Expression "Invoke-Help `"$arguments`"" }
-            'install' { Invoke-Expression "Invoke-Install `"$arguments`"" }
-            'add' { Invoke-Expression "Invoke-Add `"$arguments`"" }
-            'configure' { Invoke-Expression "Invoke-Configure `"$arguments`"" }
-            'repo' { Invoke-Expression "Invoke-Repo `"$arguments`"" }
+            'help' { Invoke-Expression "Invoke-Help $arguments" }
+            'install' { Invoke-Expression "Invoke-Install $arguments" }
+            'add' { Invoke-Expression "Invoke-Add $arguments" }
+            'configure' { Invoke-Expression "Invoke-Configure $arguments" }
+            'login' { Invoke-Expression "Invoke-SsoLogin $arguments" }
+            'repo' { Invoke-Expression "Invoke-Repo $arguments" }
             Default {
                 # Command is not known
                 # Show help

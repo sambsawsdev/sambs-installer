@@ -1,7 +1,7 @@
 function Invoke-Help {
     Process {
         try {
-            $logger.debug('Started.')
+            $logger.debug('Starting.')
             throw "Todo: Method Not Implemented."
             $logger.debug('Completed.')
         } catch {
