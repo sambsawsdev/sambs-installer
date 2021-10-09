@@ -1,7 +1,7 @@
 function Invoke-Repo {
     Param (
         [Parameter(Mandatory=$false, Position=0)]
-        [string]$destinationPath,
+        [string]$destinationPath='.',
         [Parameter(Mandatory=$false, ValueFromRemainingArguments=$true)]
         [Object[]]$arguments    
     )
@@ -9,10 +9,10 @@ function Invoke-Repo {
     Begin {
         $help = [PSCustomObject]@{
             summary = 'Clones the sambs repo from aws'
-            usage = 'Usage: sambs-installer repo [-destinationPath] <destinationPath>
+            usage = 'Usage: sambs-installer repo [-destinationPath <destinationPath>]
 
 Where:
-    destinationPath    The path where you would like to clone the sambs repo'
+    destinationPath    [default = .] The path where you would like to clone the sambs repo'
             example = 'Example: 
     sambs-installer repo .
     sambs-installer repo "C:\Users\sambs\repo"'

@@ -1,7 +1,7 @@
 function Invoke-SsoLogin {
     Param(
         [Parameter(Mandatory=$false, Position=0)]
-        [string]$profile,
+        [string]$ssoProfile,
         [Parameter(Mandatory=$false, ValueFromRemainingArguments=$true)]
         [Object[]]$arguments    
 
@@ -9,11 +9,11 @@ function Invoke-SsoLogin {
 
     Begin {
         $help = [PSCustomObject]@{
-            summary = 'Starts the aws-cli sso login for the provided profile'
-            usage = 'Usage: sambs-installer login [-profile] <profile>
+            summary = 'Starts the aws-cli sso login for the provided ssoProfile'
+            usage = 'Usage: sambs-installer login [-ssoProfile <ssoProfile>]
 
 Where:
-    profile     The name of the profile to use for aws-cli sso login'
+    ssoProfile     [default = name from sambs dev profile]The name of the ssoProfile to use for aws-cli sso login'
 
             example = 'Example: 
     sambs-installer login sso-aws-sambs-dev'
@@ -22,12 +22,16 @@ Where:
 
     Process {
         try {
-            $logger.debug("Starting. [$profile, $arguments]")
+            $logger.debug("Starting. [$ssoProfile, $arguments]")
 
-            # Todo: Handle default profile and error check if profile configured on aws
+            # Get the ssoProfile from sambs dev profile config
+            if ([string]::IsNullOrWhiteSpace($ssoProfile)) {
+                [SambsDevProfileConfig]$sambsDevProfileConfig = Get-SambsDevProfileConfig
+                $ssoProfile = $sambsDevProfileConfig.name
+            }
 
             # Show help
-            if ([string]::IsNullOrWhiteSpace($profile) -or $profile -ieq 'help') {
+            if ([string]::IsNullOrWhiteSpace($ssoProfile) -or $ssoProfile -ieq 'help') {
                 $logger.showHelp($help)
                 return
             }
@@ -38,7 +42,7 @@ Where:
             }
 
             $logger.info("Sso login to aws starting...`n")
-            Invoke-Expression "aws sso login --profile $profile"
+            Invoke-Expression "aws sso login --profile $ssoProfile"
             $logger.info("Sso login to aws completed.")
 
             $logger.debug('Completed.')

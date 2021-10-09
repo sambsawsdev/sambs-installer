@@ -31,3 +31,12 @@ class SambsDevProfileConfig {
         return $this | ConvertTo-Json -Depth 2 -Compress
     }
 }
+
+class SambsNvsConfig {
+    [string]$nodeVersion="14.18.0"
+    [string]$yarnVersion="1.22.15"
+
+    [string] toString() {
+        return $this | ConvertTo-Json -Depth 2 -Compress
+    }
+}
