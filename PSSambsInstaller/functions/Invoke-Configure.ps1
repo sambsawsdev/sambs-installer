@@ -1,7 +1,7 @@
 function Invoke-Configure {
     Param(
         [Parameter(Mandatory=$false, Position=0)]
-        [string[]]$configs,
+        [string[]]$configs='sambs',
         [Parameter(Mandatory=$false, ValueFromRemainingArguments=$true)]
         [Object[]]$arguments    
 
@@ -10,19 +10,21 @@ function Invoke-Configure {
     Begin {
         $help = [PSCustomObject]@{
             summary = 'Configures the sambs environment including sso for aws, git-remote-codecommit'
-            usage = 'Usage: sambs-installer configure [-configs] <configs>
+            usage = 'Usage: sambs-installer configure [-configs "<configs>"]
 
 Where:
-    configs     [sambs|devProfile|aws|git] The name(s) of the items to configure
+    configs     [defualt = sambs] The name(s) of the items to configure
 
 Where configs:
-    sambs       Will update the sambs config, sambs dev profile and aws
+    sambs       [default] Will update the sambs config, sambs dev profile, sambs nvs config, aws, git and nvs
     devProfile  Update the sambs dev profile config
+    nvsConfig   Update the sambs nvs config
     aws         Update aws config with the sambs dev profile config
-    git         Update git with the sambs config'
+    git         Update git config with the sambs config
+    nvs         Update nvs config with the sambs nvs config'
             example = 'Example: 
     sambs-installer configure sambs
-    sambs-installer configure -configs aws, git'
+    sambs-installer configure -configs "aws, git"'
         }
     }
 
@@ -40,8 +42,10 @@ Where configs:
                 switch ($config.toLower()) {
                     'sambs' { $null = Update-SambsConfig $arguments }
                     'devprofile' { $null = Update-SambsDevProfileConfig $arguments }
-                    'aws' { Update-AwsWithSambsDevProfileConfig $arguments  }
-                    'git' { Invoke-Expression "Update-GitConfig $arguments" } #Todo: Must implement
+                    'nvsconfig' { $null = Update-SambsNvsConfig $arguments }
+                    'aws' { $null = Update-AwsConfigWithSambs $arguments  }
+                    'git' { $null = Update-GitConfigWithSambs $arguments }
+                    'nvs' { $null = Update-NvsConfigWithSambs $arguments }
                     Default {
                         # Config is not known
                         # Show help

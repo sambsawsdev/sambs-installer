@@ -37,13 +37,21 @@ function Update-SambsConfig {
             $logger.debug("Saved sambs config '$sambsConfigFilePath'")
 
             # Update the sambsDevProfileConfig
-            [SambsDevProfileConfig]$sambsDevProfileConfig = Update-SambsDevProfileConfig $arguments
+            #[SambsDevProfileConfig]$sambsDevProfileConfig = Update-SambsDevProfileConfig $arguments
+            $null = Update-SambsDevProfileConfig $arguments
+            # Update the sambsNvsConfig
+            $null = Update-SambsNvsConfig $arguments
             # Update AWS with the sambsDevProfileConfig
-            Update-AwsWithSambsDevProfileConfig $arguments
+            Update-AwsConfigWithSambs $arguments
+            # Update Git with the sambsConfig
+            Update-GitConfigWithSambs $arguments
+            # Update Nvs with the sambsNvsConfig
+            Update-NvsConfigWithSambs $arguments
             $logger.info("Sambs config update completed.")
 
             # Login to aws using sso
-            Invoke-SsoLogin -profile $sambsDevProfileConfig.name
+            #Invoke-SsoLogin -profile $sambsDevProfileConfig.name
+            Invoke-SsoLogin
 
             $logger.debug("Completed. $($sambsConfig.toString())")
             return $sambsConfig
