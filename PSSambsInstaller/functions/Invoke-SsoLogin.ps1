@@ -37,12 +37,12 @@ Where:
             }
 
             # Check if aws is installed
-            if ( -not ( Test-ScoopAppInstalled -app 'aws' ) ) {
-                throw 'Aws-cli is required to login via sso.'
+            if ( -not ( Test-PipAppInstalled -app 'aws-sso-util' ) ) {
+                throw 'Aws-sso-util is required to login to aws via sso.'
             }
 
             $logger.info("Sso login to aws starting...`n")
-            Invoke-Expression "aws sso login --profile $ssoProfile"
+            Invoke-Expression "aws-sso-util login --profile $ssoProfile"
             $logger.info("Sso login to aws completed.")
 
             $logger.debug('Completed.')

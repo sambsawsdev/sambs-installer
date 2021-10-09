@@ -11,11 +11,11 @@ function Update-AwsConfigWithSambs {
             # Check if aws is installed
             if ( -not ( Test-ScoopAppInstalled -app 'aws' ) ) {
                 throw 'Aws-cli is required to updated aws config with sambs dev profile.'
+            }
 
-                #$logger.warn('Aws-cli is required to updated aws config with sambs dev profile.')
-
-                # Install aws-cli if not already installed
-                #Install-ScoopApp -app 'aws'
+            # Check if aws-sso-util is installed
+            if ( -not ( Test-PipAppInstalled -app 'aws-sso-util' ) ) {
+                throw 'Aws-sso-util is required to updated aws config with sambs dev profile.'
             }
 
             # Get the sambsDevProfileConfig
@@ -26,6 +26,9 @@ function Update-AwsConfigWithSambs {
             $sambsDevProfileConfig | Get-Member -MemberType Properties | ForEach-Object {
                 Invoke-Expression "aws configure set $($_.Name) $($sambsDevProfileConfig.$($_.Name)) --profile $($sambsDevProfileConfig.name)"
             }
+
+            # Configure the aws-sso-util
+            Invoke-Expression "aws-sso-util configure profile $($sambsDevProfileConfig.name)"
             $logger.info("Aws config update completed.")
 
             $logger.debug("Completed.")
