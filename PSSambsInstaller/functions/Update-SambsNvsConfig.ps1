@@ -52,14 +52,3 @@ function Update-SambsNvsConfig {
     }
 }
 
-<#
-nvs install
-nvs auto on
-nvs add $version
-nvs link $version
-nvs use 14
-
-npm install --global yarn@"^1"
-
-yarn 1.22.15
-#>
