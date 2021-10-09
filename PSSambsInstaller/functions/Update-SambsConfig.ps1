@@ -39,7 +39,9 @@ function Update-SambsConfig {
             # Update the sambsDevProfileConfig
             [SambsDevProfileConfig]$sambsDevProfileConfig = Update-SambsDevProfileConfig $arguments
             # Update AWS with the sambsDevProfileConfig
-            Update-AwsWithSambsDevProfileConfig $arguments
+            Update-AwsConfigWithSambs $arguments
+            # Update Git with the sambsConfig
+            Update-GitConfigWithSambs $arguments
             $logger.info("Sambs config update completed.")
 
             # Login to aws using sso

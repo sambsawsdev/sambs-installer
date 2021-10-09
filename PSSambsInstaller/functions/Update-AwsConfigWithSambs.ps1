@@ -1,4 +1,4 @@
-function Update-AwsWithSambsDevProfileConfig {
+function Update-AwsConfigWithSambs {
     Param (
         [Parameter(Mandatory=$false, ValueFromRemainingArguments=$true)]
         [Object[]]$arguments    

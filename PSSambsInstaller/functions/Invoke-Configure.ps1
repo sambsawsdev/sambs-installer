@@ -40,8 +40,8 @@ Where configs:
                 switch ($config.toLower()) {
                     'sambs' { $null = Update-SambsConfig $arguments }
                     'devprofile' { $null = Update-SambsDevProfileConfig $arguments }
-                    'aws' { Update-AwsWithSambsDevProfileConfig $arguments  }
-                    'git' { Invoke-Expression "Update-GitConfig $arguments" } #Todo: Must implement
+                    'aws' { Update-AwsConfigWithSambs $arguments  }
+                    'git' { Update-GitConfigWithSambs $arguments }
                     Default {
                         # Config is not known
                         # Show help
