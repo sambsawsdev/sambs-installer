@@ -25,6 +25,7 @@ function Update-NvsConfigWithSambs {
             Invoke-Expression "nvs use $($sambsNvsConfig.nodeVersion)"
             
             Invoke-Expression "npm install --global yarn@`"$($sambsNvsConfig.yarnVersion)`""
+            Invoke-Expression "npm install --global aws-cdk@`"$($sambsNvsConfig.awscdkVersion)`""
             $logger.info("Nvs config update completed.")
 
 
