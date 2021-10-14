@@ -13,7 +13,7 @@ function Invoke-Configure {
             usage = 'Usage: sambs-installer configure [-configs "<configs>"]
 
 Where:
-    configs     [defualt = sambs] The name(s) of the items to configure
+    configs     [default = sambs] The name(s) of the items to configure
 
 Where configs:
     sambs       [default] Will update the sambs config, sambs dev profile, sambs nvs config, aws, git and nvs
