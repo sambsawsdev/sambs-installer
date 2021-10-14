@@ -29,7 +29,17 @@ Where:
                 return
             }
 
-            # Todo: Update Scoop            
+            # Ensure scoop is installed
+            if ( -not (Test-ScoopInstalled) ) {
+                throw "Scoop is required to install packages."
+            }
+            
+            # Update scoop
+            $logger.info("Update scoop starting...`n")
+            # Add bucket
+            Invoke-Expression "scoop update"
+            $logger.info("Update scoop completed.")                
+        
 
             # Loop through all the packages
             foreach($package in $packages) {

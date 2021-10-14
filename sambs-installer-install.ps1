@@ -152,6 +152,7 @@ function Install-SambsInstaller {
         try {
             # Check if installer already installed
             if ( Test-SambsInstallerInstalled ) {
+                Write-Warning "Sambs installer already installed.`nExiting sambs-installer-install"
                 return
             }
 
