@@ -1,0 +1,20 @@
+{
+    "buckets": [
+        { "name": "extras"},
+        { "name": "sambs", "repo": "https://github.com/sambsawsdev/sambs-scoop"}
+    ],
+    "scoopApps": [
+        { "app": "git" },
+        { "app": "sambs-installer" },
+        { "app": "aws" },
+        { "app": "nvs" },
+        { "app": "python" },
+        { "app": "notepadplusplus" },
+        { "app": "shareaza" },
+        { "app": "vscode" }
+    ],
+    "pipApps": [
+        { "app": "aws-sso-util" },
+        { "app": "git-remote-codecommit" }
+    ]
+}
