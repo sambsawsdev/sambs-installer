@@ -37,10 +37,16 @@ function Install-Package {
                 Install-ScoopApp -app $scoopApp.app
             }
 
+            # Refresh the path
+            $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+            
             # Install all the pipApps
             foreach ($pipApp in $packageJson.pipApps) {
                 Install-PipApp -app $pipApp.app
             }
+
+            # Refresh the path
+            $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 
             $logger.debug('Completed.')
         } catch {
