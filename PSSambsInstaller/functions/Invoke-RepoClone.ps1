@@ -60,10 +60,11 @@ Where:
             # Todo: Check git-remote-codecommit,  and git installed
             Invoke-Expression "git clone codecommit://$($sambsDevProfileConfig.name)@sambs-monorepo"
 
-            Pop-Location
-
             # Initialize the repo
             Initialize-Repo -repoPath $monoRepoPath
+
+            Pop-Location
+
             $logger.info("Sambs repo clone completed.")
 
             $logger.debug('Completed.')
