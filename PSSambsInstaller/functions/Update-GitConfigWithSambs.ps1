@@ -32,6 +32,7 @@ function Update-GitConfigWithSambs {
             
             # Todo: Should we set this??
             Invoke-Expression "git config --global credential.https://github.com.helper manager-core"
+            Invoke-Expression "git config --global pull.rebase false"
             $logger.info("Git credential config update completed.")
 
             $logger.debug("Completed.")
