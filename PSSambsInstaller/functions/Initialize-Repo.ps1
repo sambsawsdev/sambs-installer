@@ -39,10 +39,15 @@ function Initialize-Repo {
             $logger.info("Build sambs cli completed.")
             Pop-Location
 
+            # Change directory to the repoPath
+            Push-Location -LiteralPath $repoPath
+            $repoPath = Get-Location
+
             # Add yarn vscode sdk
             $logger.info("Add yarn vscode sdk starting...`n")
             Invoke-Expression "yarn dlx @yarnpkg/sdks vscode"
             $logger.info("Add yarn vscode sdk completed.")
+            Pop-Location
 
             $logger.info("Sambs repo initialize completed.")
 
