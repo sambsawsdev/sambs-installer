@@ -39,6 +39,14 @@ function Initialize-Repo {
             $logger.info("Build sambs cli completed.")
             Pop-Location
 
+            $logger.info("Shim sambs cli starting...`n")
+            [string]$scoopPath = (Get-Command scoop -ErrorAction Ignore -ShowCommandInfo).Definition | Split-Path
+            [string]$scoopCoreFilePath = Join-Path -Path $scoopPath -ChildPath '../apps/scoop/current/lib/core.ps1'
+            [string]$sambsFilePath = Join-Path -Path $sambsScriptCliPath -ChildPath '/bin/sambs.ps1'
+            . "$scoopCoreFilePath"
+            shim $sambsFilePath
+            $logger.info("Shim sambs cli completed.")
+
             # Change directory to the repoPath
             Push-Location -LiteralPath $repoPath
             $repoPath = Get-Location
