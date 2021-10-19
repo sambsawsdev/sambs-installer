@@ -58,11 +58,10 @@ function Update-SambsConfig {
 
             # Login to aws using sso
             #Invoke-SsoLogin -profile $sambsDevProfileConfig.name
-            Invoke-SsoLogin
+            # Invoke-SsoLogin
             # Install the repo
-            Invoke-RepoClone
+            # Invoke-RepoClone
             $logger.info("Sambs config update completed.")
-
 
             $logger.debug("Completed. $($sambsConfig.toString())")
             return $sambsConfig

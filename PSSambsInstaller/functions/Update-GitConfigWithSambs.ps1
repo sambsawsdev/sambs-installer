@@ -14,7 +14,8 @@ function Update-GitConfigWithSambs {
             }
 
             # Get the sambsConfig
-            [SambsConfig]$sambsConfig = Get-SambsConfig            
+            #[SambsConfig]$sambsConfig = Get-SambsConfig            
+            $sambsConfig = Get-SambsConfig            
 
             # Save the sambsConfig to Git
             $logger.info("Git user config update starting...`n")
