@@ -1,3 +1,13 @@
+class SambsConfig {
+    [string]$email='None'
+    [string]$fullName='None'
+    [string]$repoPath=(Resolve-Path -LiteralPath '.')
+
+    [string] toString() {
+        return $this | ConvertTo-Json -Depth 2 -Compress
+    }
+}
+
 function Get-SambsConfig {
     [OutputType([SambsConfig])]
     Param()

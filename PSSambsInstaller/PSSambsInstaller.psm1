@@ -9,16 +9,6 @@ Export-ModuleMember -Function *
 # Create the global logger
 $Global:logger = Get-Logger
 
-class SambsConfig {
-    [string]$email='None'
-    [string]$fullName='None'
-    [string]$repoPath=(Resolve-Path -LiteralPath '.')
-
-    [string] toString() {
-        return $this | ConvertTo-Json -Depth 2 -Compress
-    }
-}
-
 class SambsDevProfileConfig {
     [string]$name='sso-aws-sambs-dev'
     [string]$sso_start_url='https://d-93670d3ca3.awsapps.com/start'
