@@ -41,7 +41,8 @@ function Update-SambsConfig {
 
             # Save the sambs config
             $logger.debug("Saving sambs config '$($sambsConfig.ToString())'")
-            $sambsConfig | ConvertTo-Json -Depth 2 | Out-File $sambsConfigFilePath -Force
+            $utf8NoBomEncoding = New-Object System.Text.UTF8Encoding $False
+            [System.IO.File]::WriteAllLines($sambsConfigFilePath, $sambsConfig.toString(), $utf8NoBomEncoding)    
             $logger.debug("Saved sambs config '$sambsConfigFilePath'")
 
             # Update the sambsDevProfileConfig

@@ -45,7 +45,8 @@ function Update-SambsNvsConfig {
             #>
             # Save the sambs dev profile config
             $logger.debug("Saving sambs nvs config '$($sambsNvsConfig.ToString())'")
-            $sambsNvsConfig | ConvertTo-Json -Depth 2 | Out-File $sambsNvsConfigFilePath -Force
+            $utf8NoBomEncoding = New-Object System.Text.UTF8Encoding $False
+            [System.IO.File]::WriteAllLines($sambsNvsConfigFilePath, $sambsNvsConfig.toString(), $utf8NoBomEncoding)    
             $logger.debug("Saved sambs nvs config '$sambsNvsConfigFilePath'")
 
             $logger.info("$prefix update completed.")

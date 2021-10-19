@@ -68,7 +68,8 @@ function Update-SambsDevProfileConfig {
 
             # Save the sambs dev profile config
             $logger.debug("Saving sambs dev profile config '$($sambsDevProfileConfig.ToString())'")
-            $sambsDevProfileConfig | ConvertTo-Json -Depth 2 | Out-File $sambsDevProfileConfigFilePath -Force
+            $utf8NoBomEncoding = New-Object System.Text.UTF8Encoding $False
+            [System.IO.File]::WriteAllLines($sambsDevProfileConfigFilePath, $sambsDevProfileConfig.toString(), $utf8NoBomEncoding)    
             $logger.debug("Saved sambs dev profile config '$sambsDevProfileConfigFilePath'")
 
             $logger.info("$prefix update completed.")
