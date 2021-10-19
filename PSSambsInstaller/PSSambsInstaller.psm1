@@ -26,7 +26,7 @@ class SambsDevProfileConfig {
 class SambsNvsConfig {
     [string]$nodeVersion="14.18.0"
     [string]$yarnVersion="1.22.15"
-    [string]$awscdkVersion="1.127.0"
+    #[string]$awscdkVersion="1.127.0"
 
     [string] toString() {
         return $this | ConvertTo-Json -Depth 2 -Compress

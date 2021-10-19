@@ -35,13 +35,14 @@ function Update-SambsNvsConfig {
             if (-not [string]::IsNullOrWhiteSpace($response)) {
                 $sambsNvsConfig.yarnVersion = $response
             }
+            <#
             # Get the awscdkVersion
             $response = Read-Host "$prefix aws-cdk version [$($sambsNvsConfig.awscdkVersion)]"
             # If user just presses enter then use the existing value
             if (-not [string]::IsNullOrWhiteSpace($response)) {
                 $sambsNvsConfig.awscdkVersion = $response
             }
-
+            #>
             # Save the sambs dev profile config
             $logger.debug("Saving sambs nvs config '$($sambsNvsConfig.ToString())'")
             $sambsNvsConfig | ConvertTo-Json -Depth 2 | Out-File $sambsNvsConfigFilePath -Force
