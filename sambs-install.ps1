@@ -17,4 +17,17 @@ if ( Test-Path -LiteralPath $monoRepoPath -PathType Container ) {
     Invoke-Expression 'sambs-installer repo clone'
 }
 
+# Check if sambs-installer exists
+[string]$sambsInstallerPath = Join-Path -Path '.' -ChildPath '/sambs-installer'
+if ( -not (Test-Path -LiteralPath $sambsInstallerPath -PathType Container) ) {
+    # Clone the repo
+    Invoke-Expression "git clone https://github.com/sambsawsdev/sambs-installer"
+}
+
+# Check if sambs-scoop exists
+[string]$sambsScoopPath = Join-Path -Path '.' -ChildPath '/sambs-scoop'
+if ( -not (Test-Path -LiteralPath $sambsScoopPath -PathType Container) ) {
+    # Clone the repo
+    Invoke-Expression "git clone https://github.com/sambsawsdev/sambs-scoop"
+}
 

@@ -1,7 +1,5 @@
 function Initialize-Repo {
     Param (
-        [Parameter(Mandatory=$false, Position=0)]
-        [string]$repoPath='.',
         [Parameter(Mandatory=$false, ValueFromRemainingArguments=$true)]
         [Object[]]$arguments
     )
@@ -10,6 +8,11 @@ function Initialize-Repo {
     Process {
         try {
             $logger.debug("Starting. [$repoPath, $arguments]")
+
+            # Get the existing config
+            #[SambsConfig]$sambsConfig = Get-SambsConfig
+            $sambsConfig = Get-SambsConfig
+            [string]$repoPath = Join-Path -Path $sambsConfig.repoPath -ChildPath '/sambs-monorepo'
 
             # Ensure repo is installed
             if (-not (Test-RepoInstalled -repoPath $repoPath) ) {

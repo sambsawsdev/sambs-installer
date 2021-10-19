@@ -18,17 +18,25 @@ function Update-SambsConfig {
             $logger.debug("Starting. [$arguments]")
 
             # Get the existing config
-            [SambsConfig]$sambsConfig = Get-SambsConfig
+            #[SambsConfig]$sambsConfig = Get-SambsConfig
+            $sambsConfig = Get-SambsConfig
 
             $logger.info("Sambs config update starting...`n")
 
             # Get the email
             $sambsConfig.email = Get-ValidEmail -email $sambsConfig.email
             # Get the fullName
-            $newFullNameResponse = Read-Host "Full name [$($sambsConfig.fullName)]"
+            [string]$response = Read-Host "Full name [$($sambsConfig.fullName)]"
             # If user just presses enter then use the existing value
-            if (-not [string]::IsNullOrWhiteSpace($newFullNameResponse)) {
-                $sambsConfig.fullName = $newFullNameResponse
+            if (-not [string]::IsNullOrWhiteSpace($response)) {
+                $sambsConfig.fullName = $response
+            }
+            # Get the repoPath
+            # Todo: Validate
+            $response = Read-Host "Sambs repository path [$($sambsConfig.repoPath)]"
+            # If user just presses enter then use the existing value
+            if (-not [string]::IsNullOrWhiteSpace($response)) {
+                $sambsConfig.repoPath = $response
             }
 
             # Save the sambs config
@@ -47,11 +55,14 @@ function Update-SambsConfig {
             Update-GitConfigWithSambs $arguments
             # Update Nvs with the sambsNvsConfig
             Update-NvsConfigWithSambs $arguments
-            $logger.info("Sambs config update completed.")
 
             # Login to aws using sso
             #Invoke-SsoLogin -profile $sambsDevProfileConfig.name
             Invoke-SsoLogin
+            # Install the repo
+            Invoke-RepoClone
+            $logger.info("Sambs config update completed.")
+
 
             $logger.debug("Completed. $($sambsConfig.toString())")
             return $sambsConfig

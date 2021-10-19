@@ -46,6 +46,62 @@ Process {
             [System.Environment]::SetEnvironmentVariable('sambsHome', $null, 'User')
             $logger.info('Removing sambsHome completed.')
 
+            $logger.info('Removing sambs repo starting...')
+            $sambsConfig = Get-SambsConfig
+            if ( Test-Path -LiteralPath $sambsConfig.repoPath -PathType Container ) {
+                # Remove the directory
+                $null = Remove-Item -Path $sambsConfig.repoPath -Recurse -Force
+            }
+            $logger.info('Removing sambs repo completed.')
+
+            # Todo: Find a better way of the below
+            # Remove other paths 
+            $logger.info('Removing other paths starting...')
+            # .config
+            [string]$removePath = Join-Path -Path $HOME -ChildPath '/.config'
+            if ( Test-Path -LiteralPath $removePath -PathType Container ) {
+                $logger.info("Removing $removePath")
+                $null = Remove-Item -Path $removePath -Recurse -Force
+            }
+            # .vscode
+            $removePath = Join-Path -Path $HOME -ChildPath '/.vscode'
+            if ( Test-Path -LiteralPath $removePath -PathType Container ) {
+                $logger.info("Removing $removePath")
+                $null = Remove-Item -Path $removePath -Recurse -Force
+            }
+            # .gitconfig
+            $removePath = Join-Path -Path $HOME -ChildPath '.gitconfig'
+            if ( Test-Path -LiteralPath $removePath -PathType Leaf ) {
+                $logger.info("Removing $removePath")
+                $null = Remove-Item -Path $removePath -Force
+            }
+            # pip             
+            $removePath = Join-Path -Path ([System.Environment]::GetFolderPath('LocalApplicationData')) -ChildPath '/pip'
+            if ( Test-Path -LiteralPath $removePath -PathType Container ) {
+                $logger.info("Removing $removePath")
+                $null = Remove-Item -Path $removePath -Recurse -Force
+            }
+            # yarn
+            $removePath = Join-Path -Path ([System.Environment]::GetFolderPath('LocalApplicationData')) -ChildPath '/yarn'
+            if ( Test-Path -LiteralPath $removePath -PathType Container ) {
+                $logger.info("Removing $removePath")
+                $null = Remove-Item -Path $removePath -Recurse -Force
+            }
+            # npm-cache
+            $removePath = Join-Path -Path ([System.Environment]::GetFolderPath('ApplicationData')) -ChildPath '/npm-cache'
+            if ( Test-Path -LiteralPath $removePath -PathType Container ) {
+                $logger.info("Removing $removePath")
+                $null = Remove-Item -Path $removePath -Recurse -Force
+            }
+            # Scoop Start Menu
+            $removePath = Join-Path -Path ([System.Environment]::GetFolderPath('ApplicationData')) -ChildPath '/Microsoft/Windows/Start Menu/Programs/Scoop Apps'
+            if ( Test-Path -LiteralPath $removePath -PathType Container ) {
+                $logger.info("Removing $removePath")
+                $null = Remove-Item -Path $removePath -Recurse -Force
+            }
+
+            $logger.info('Removing other paths completed.')
+
 
             # Cleanup path
             $logger.info('Removing sambs from the path starting...')
