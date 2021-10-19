@@ -70,6 +70,12 @@ Process {
             # Todo: Find a better way of the below
             # Remove other paths 
             $logger.info('Removing other paths starting...')
+            # .aws
+            [string]$removePath = Join-Path -Path $HOME -ChildPath '/.aws'
+            if ( Test-Path -LiteralPath $removePath -PathType Container ) {
+                $logger.info("Removing $removePath")
+                $null = Remove-Item -Path $removePath -Recurse -Force
+            }
             # .config
             [string]$removePath = Join-Path -Path $HOME -ChildPath '/.config'
             if ( Test-Path -LiteralPath $removePath -PathType Container ) {
