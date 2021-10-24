@@ -37,6 +37,11 @@ function Initialize-Repo {
             $sambsScriptCliPath = Get-Location
 
             # Build the sambs-scripts-cli project
+            $logger.info("Yarn install starting...`n")
+            Invoke-Expression "yarn install"
+            $logger.info("Yarn install completed.")
+
+            # Build the sambs-scripts-cli project
             $logger.info("Build sambs cli starting...`n")
             Invoke-Expression "yarn tsc --build tsconfig.json tsconfig.esm.json"
             $logger.info("Build sambs cli completed.")
