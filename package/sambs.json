@@ -7,7 +7,6 @@
         { "app": "git" },
         { "app": "sambs-installer" },
         { "app": "aws" },
-        { "app": "aws-sam-cli" },
         { "app": "docker" },
         { "app": "nvs" },
         { "app": "python" },
