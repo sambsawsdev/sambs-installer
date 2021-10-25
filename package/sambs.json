@@ -7,7 +7,6 @@
         { "app": "git" },
         { "app": "sambs-installer" },
         { "app": "aws" },
-        { "app": "docker" },
         { "app": "nvs" },
         { "app": "python" },
         { "app": "notepadplusplus" },
