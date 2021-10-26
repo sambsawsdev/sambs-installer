@@ -31,21 +31,20 @@ function Initialize-Repo {
             $logger.info("Configure nvs starting...")
             Update-NvsConfigWithSambs
             $logger.info("Configure nvs completed")
+            
+            # Change directory to the repo
+            Push-Location -LiteralPath $repoPath
+            $repoPath = Get-Location
 
-            # Change directory to the sambs-scripts-cli project
-            Push-Location -LiteralPath $sambsScriptCliPath
-            $sambsScriptCliPath = Get-Location
-
-            # Build the sambs-scripts-cli project
-            $logger.info("Yarn install starting...`n")
+            # Yarn install to unplug (aws-cdk, aws-sdk)
+            $logger.info("Yarn install starting ...`n")
             Invoke-Expression "yarn install"
             $logger.info("Yarn install completed.")
 
-            # Build the sambs-scripts-cli project
-            $logger.info("Build sambs cli starting...`n")
+            # Build the repository
+            $logger.info("Build sambs repo starting...`n")
             Invoke-Expression "yarn tsc --build tsconfig.json tsconfig.esm.json"
-            $logger.info("Build sambs cli completed.")
-            Pop-Location
+            $logger.info("Build sambs repo completed.")
 
             $logger.info("Shim sambs cli starting...`n")
             [string]$scoopPath = (Get-Command scoop -ErrorAction Ignore -ShowCommandInfo).Definition | Split-Path
@@ -54,10 +53,6 @@ function Initialize-Repo {
             . "$scoopCoreFilePath"
             shim $sambsFilePath
             $logger.info("Shim sambs cli completed.")
-
-            # Change directory to the repoPath
-            Push-Location -LiteralPath $repoPath
-            $repoPath = Get-Location
 
             # Add yarn vscode sdk
             $logger.info("Add yarn vscode sdk starting...`n")
