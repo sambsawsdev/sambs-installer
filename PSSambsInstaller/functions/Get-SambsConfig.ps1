@@ -2,6 +2,7 @@ class SambsConfig {
     [string]$email='None'
     [string]$fullName='None'
     [string]$repoPath=(Resolve-Path -LiteralPath '.')
+    [string]$packagePath=(Join-Path -Path $env:sambsHome -ChildPath '/packages')
 
     [string] toString() {
         return $this | ConvertTo-Json -Depth 2 -Compress

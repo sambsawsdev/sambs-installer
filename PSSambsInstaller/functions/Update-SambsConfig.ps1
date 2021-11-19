@@ -39,6 +39,13 @@ function Update-SambsConfig {
                 $sambsConfig.repoPath = $response
             }
 
+            # Get the packagePath
+            $response = Read-Host "Sambs package path [$($sambsConfig.packagePath)]"
+            # If user just presses enter then use the existing value
+            if (-not [string]::IsNullOrWhiteSpace($response)) {
+                $sambsConfig.packagePath = $response
+            }
+
             # Save the sambs config
             $logger.debug("Saving sambs config '$($sambsConfig.ToString())'")
             $utf8NoBomEncoding = New-Object System.Text.UTF8Encoding $False
