@@ -10,11 +10,11 @@
         { "app": "nvs" },
         { "app": "python" },
         { "app": "notepadplusplus" },
-        { "app": "vscode" }
+        { "app": "vscode" },
+        { "app": "putty" }
 
     ],
     "pipApps": [
-        { "app": "aws-sso-util" },
-        { "app": "git-remote-codecommit" }
+        { "app": "aws-sso-util" }
     ]
 }

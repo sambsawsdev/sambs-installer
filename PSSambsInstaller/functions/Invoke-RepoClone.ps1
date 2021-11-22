@@ -28,11 +28,6 @@ function Invoke-RepoClone {
                 throw "git is required to clone the sambs repo."
             }
 
-            # Ensure git-remote-codecommit is installed
-            if ( -not (Test-PipAppInstalled -app 'git-remote-codecommit') ) {
-                throw "git-remote-codecommit is required to clone the sambs repo."
-            }
-
             $logger.info("Sambs repo clone starting...`n")
             # Get the sambs config
             #[SambsConfig]$sambsConfig = Get-SambsConfig
@@ -60,7 +55,7 @@ function Invoke-RepoClone {
                 #[SambsDevProfileConfig]$sambsDevProfileConfig = Get-SambsDevProfileConfig
                 $sambsDevProfileConfig = Get-SambsDevProfileConfig
                 # Todo: Check git-remote-codecommit,  and git installed
-                Invoke-Expression "git clone codecommit://$($sambsDevProfileConfig.name)@sambs-monorepo"
+                Invoke-Expression "git clone https://git-codecommit.eu-west-1.amazonaws.com/v1/repos/MonorepoRepository $repoPath"
                 # Initialize the repo
                 Initialize-Repo
                 $logger.info("Sambs repo clone sambs-monorepo completed.")
