@@ -60,7 +60,7 @@ function Test-SambsBucketInstalled {
 
             # Get the list of installed buckets using scoop bucket list
             [bool]$isInstalled = $false
-            [string[]]$buckets = Invoke-Expression 'scoop bucket list' | ForEach-Object { return $_.ToLower() }
+            [string[]]$buckets = Invoke-Expression 'scoop bucket list' | ForEach-Object { return $_ }
             if ($null -ne $buckets) {
                 $isInstalled = $buckets.Contains('sambs')
             }
