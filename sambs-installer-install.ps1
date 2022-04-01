@@ -75,13 +75,13 @@ function Test-SambsBucketInstalled {
 function Set-SambsHome {
     Process {
         try {
-            # Use env:sambsHome or the default <userHome>/.sambs
-            if ([string]::IsNullOrWhiteSpace($env:sambsHome)) {
-                $env:sambsHome = Join-Path -Path $HOME -ChildPath '/.sambs'
+            # Use env:SAMBS_HOME or the default <userHome>/.sambs
+            if ([string]::IsNullOrWhiteSpace($env:SAMBS_HOME)) {
+                $env:SAMBS_HOME = Join-Path -Path $HOME -ChildPath '/.sambs'
             }
 
-            $env:SCOOP = Join-Path -Path $env:sambsHome -ChildPath '/scoop'
-            [System.Environment]::SetEnvironmentVariable('sambsHome', $env:sambsHome, 'User')
+            $env:SCOOP = Join-Path -Path $env:SAMBS_HOME -ChildPath '/scoop'
+            [System.Environment]::SetEnvironmentVariable('SAMBS_HOME', $env:SAMBS_HOME, 'User')
             [System.Environment]::SetEnvironmentVariable('SCOOP', $env:SCOOP, 'User')
         } catch {
             throw "Set-SambsHome Failed: $_"
@@ -156,7 +156,7 @@ function Install-SambsInstaller {
                 return
             }
 
-            # Set sambsHome
+            # Set SAMBS_HOME
             Set-SambsHome
             # Install scoop
             Install-Scoop

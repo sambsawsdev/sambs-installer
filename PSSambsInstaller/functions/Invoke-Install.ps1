@@ -43,7 +43,7 @@ Where:
 
             # Loop through all the packages
             foreach($package in $packages) {
-                [string]$packageFilePath = Join-Path -Path $env:sambsHome "/scoop/apps/sambs-installer/current/package/$package.json"
+                [string]$packageFilePath = Join-Path -Path $env:SAMBS_HOME "/scoop/apps/sambs-installer/current/package/$package.json"
                 Install-Package -packageFilePath $packageFilePath 
             }
 

@@ -10,7 +10,7 @@ function Add-Package {
 
     Begin {
         # Create the package path if it does not exist
-        [string]$packagePath = Join-Path -Path $env:sambsHome -ChildPath '/scoop/persist/sambs-installer/package'
+        [string]$packagePath = Join-Path -Path $env:SAMBS_HOME -ChildPath '/scoop/persist/sambs-installer/package'
         if ( -not ( Test-Path -LiteralPath $packagePath -PathType Container ) ) {
             $null = New-Item -Path $packagePath -ItemType Directory -Force
         }        

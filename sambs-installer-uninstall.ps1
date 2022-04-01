@@ -5,14 +5,14 @@ Begin {
 
     $logger.info('Sambs Uninstaller starting...')
 
-    # Set sambsHome
-    [string]$sambsHome = $env:sambsHome
+    # Set SAMBS_HOME
+    [string]$SAMBS_HOME = $env:SAMBS_HOME
 }
 
 Process {
     try {        
         # Confirm sambs must be uninstalled
-        $logger.warn("Uninstall will completely remove sambs and all apps installed for sambsHome $sambshome")
+        $logger.warn("Uninstall will completely remove sambs and all apps installed for SAMBS_HOME $sambshome")
         [string]$confirmUninstall = Read-Host 'Are you sure you want to completly uninstall sambs [y/N]? '
 
         if ($confirmUninstall -ieq 'y') {
@@ -37,14 +37,14 @@ Process {
                 $logger.info('Uninstalling scoop completed.')
             }
 
-            # Remove sambsHome
-            $logger.info('Removing sambsHome starting...')
-            if ( Test-Path -LiteralPath $sambsHome -PathType Container ) {
+            # Remove SAMBS_HOME
+            $logger.info('Removing SAMBS_HOME starting...')
+            if ( Test-Path -LiteralPath $SAMBS_HOME -PathType Container ) {
                 # Remove the directory
-                $null = Remove-Item -Path $sambsHome -Recurse -Force
+                $null = Remove-Item -Path $SAMBS_HOME -Recurse -Force
             }
-            [System.Environment]::SetEnvironmentVariable('sambsHome', $null, 'User')
-            $logger.info('Removing sambsHome completed.')
+            [System.Environment]::SetEnvironmentVariable('SAMBS_HOME', $null, 'User')
+            $logger.info('Removing SAMBS_HOME completed.')
 
             $logger.info('Removing sambs repo starting...')
             $installConfig = Get-InstallConfig
@@ -127,8 +127,8 @@ Process {
             [string[]]$newPath = $null
             # Loop through all the path items
             foreach ($pathItem in [System.Environment]::GetEnvironmentVariable('Path', 'User').Split(';')) {
-                # Do not include anything that starts with <sambsHome>
-                if (-not $pathItem.StartsWith($sambsHome)) {
+                # Do not include anything that starts with <SAMBS_HOME>
+                if (-not $pathItem.StartsWith($SAMBS_HOME)) {
                     $newPath = "$newPath$pathItem$([IO.Path]::PathSeparator)"
                 }
             }
