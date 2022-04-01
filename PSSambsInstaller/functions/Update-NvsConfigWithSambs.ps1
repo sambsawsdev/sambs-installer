@@ -13,19 +13,19 @@ function Update-NvsConfigWithSambs {
                 throw 'Nvs is required to update nvs config with sambs nvs config.'
             }
 
-            # Get the sambsNvsConfig
-            [SambsNvsConfig]$sambsNvsConfig = Get-SambsNvsConfig            
+            # Get the nvsConfig
+            [NvsConfig]$nvsConfig = Get-NvsConfig            
 
-            # Save the sambsNvsConfig to Nvs
+            # Save the nvsConfig to Nvs
             $logger.info("Nvs config update starting...`n")
             Invoke-Expression "nvs install"
             Invoke-Expression "nvs auto on"
-            Invoke-Expression "nvs add $($sambsNvsConfig.nodeVersion)"
-            Invoke-Expression "nvs link $($sambsNvsConfig.nodeVersion)"
-            Invoke-Expression "nvs use $($sambsNvsConfig.nodeVersion)"
+            Invoke-Expression "nvs add $($nvsConfig.nodeVersion)"
+            Invoke-Expression "nvs link $($nvsConfig.nodeVersion)"
+            Invoke-Expression "nvs use $($nvsConfig.nodeVersion)"
             
-            Invoke-Expression "npm install --global yarn@`"$($sambsNvsConfig.yarnVersion)`""
-            Invoke-Expression "npm install --global aws-cdk@`"$($sambsNvsConfig.awscdkVersion)`""
+            Invoke-Expression "npm install --global yarn@`"$($nvsConfig.yarnVersion)`""
+            #Invoke-Expression "npm install --global aws-cdk@`"$($nvsConfig.awscdkVersion)`""
             $logger.info("Nvs config update completed.")
 
 

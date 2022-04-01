@@ -36,7 +36,7 @@ function Install-Package {
             foreach ($scoopApp in $packageJson.scoopApps) {
                 Install-ScoopApp -app $scoopApp.app
             }
-
+           
             # Install all the pipApps
             foreach ($pipApp in $packageJson.pipApps) {
                 Install-PipApp -app $pipApp.app

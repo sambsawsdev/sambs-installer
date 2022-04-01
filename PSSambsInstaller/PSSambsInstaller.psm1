@@ -9,16 +9,7 @@ Export-ModuleMember -Function *
 # Create the global logger
 $Global:logger = Get-Logger
 
-class SambsConfig {
-    [string]$email='None'
-    [string]$fullName='None'
-
-    [string] toString() {
-        return $this | ConvertTo-Json -Depth 2 -Compress
-    }
-}
-
-class SambsDevProfileConfig {
+class DevProfileConfig {
     [string]$name='sso-aws-sambs-dev'
     [string]$sso_start_url='https://d-93670d3ca3.awsapps.com/start'
     [string]$sso_region='eu-west-1'
@@ -32,10 +23,10 @@ class SambsDevProfileConfig {
     }
 }
 
-class SambsNvsConfig {
-    [string]$nodeVersion="14.18.0"
-    [string]$yarnVersion="1.22.15"
-    [string]$awscdkVersion="1.127.0"
+class NvsConfig {
+    [string]$nodeVersion="14"
+    [string]$yarnVersion="^1"
+    #[string]$awscdkVersion="1.127.0"
 
     [string] toString() {
         return $this | ConvertTo-Json -Depth 2 -Compress

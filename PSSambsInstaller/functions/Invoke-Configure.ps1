@@ -40,9 +40,9 @@ Where configs:
 
             foreach($config in $configs){
                 switch ($config.toLower()) {
-                    'sambs' { $null = Update-SambsConfig $arguments }
-                    'devprofile' { $null = Update-SambsDevProfileConfig $arguments }
-                    'nvsconfig' { $null = Update-SambsNvsConfig $arguments }
+                    'sambs' { $null = Update-InstallConfig $arguments }
+                    'devprofile' { $null = Update-DevProfileConfig $arguments }
+                    'nvsconfig' { $null = Update-NvsConfig $arguments }
                     'aws' { $null = Update-AwsConfigWithSambs $arguments  }
                     'git' { $null = Update-GitConfigWithSambs $arguments }
                     'nvs' { $null = Update-NvsConfigWithSambs $arguments }

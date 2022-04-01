@@ -1,7 +1,5 @@
 function Initialize-Repo {
     Param (
-        [Parameter(Mandatory=$false, Position=0)]
-        [string]$repoPath='.',
         [Parameter(Mandatory=$false, ValueFromRemainingArguments=$true)]
         [Object[]]$arguments
     )
@@ -10,6 +8,11 @@ function Initialize-Repo {
     Process {
         try {
             $logger.debug("Starting. [$repoPath, $arguments]")
+
+            # Get the existing config
+            #[InstallConfig]$installConfig = Get-InstallConfig
+            $installConfig = Get-InstallConfig
+            [string]$repoPath = Join-Path -Path $installConfig.repoPath -ChildPath '/sambs-monorepo'
 
             # Ensure repo is installed
             if (-not (Test-RepoInstalled -repoPath $repoPath) ) {
@@ -21,30 +24,43 @@ function Initialize-Repo {
                 throw "Can't find sambs-scripts-cli project '$sambsScriptCliPath'"
             }
             
-            $logger.info("Sambs cli initialize starting...")
+            $logger.info("Sambs repo initialize starting...")
 
             # Ensure the latest Nvs config is setup according to the sambs config
             # This ensures nvs and all globals (e.g yarn, aws-cdk) are installed.
-            $logger.info("Sambs cli initialize configure nvs starting...")
+            $logger.info("Configure nvs starting...")
             Update-NvsConfigWithSambs
-            $logger.info("Sambs cli initialize configure nvs completed")
+            $logger.info("Configure nvs completed")
+            
+            # Change directory to the repo
+            Push-Location -LiteralPath $repoPath
+            $repoPath = Get-Location
 
-            # Change directory to the sambs-scripts-cli project
-            Push-Location -LiteralPath $sambsScriptCliPath
-            $sambsScriptCliPath = Get-Location
+            # Yarn install to unplug (aws-cdk, aws-sdk)
+            $logger.info("Yarn install starting ...`n")
+            Invoke-Expression "yarn install"
+            $logger.info("Yarn install completed.")
 
-            # Build the sambs-scripts-cli project
-            $logger.info("Sambs cli initialize build sambs cli starting...`n")
+            # Build the repository
+            $logger.info("Build sambs repo starting...`n")
             Invoke-Expression "yarn tsc --build tsconfig.json tsconfig.esm.json"
-            $logger.info("Sambs cli initialize build sambs cli completed.")
+            $logger.info("Build sambs repo completed.")
 
-            # Link the project
-            $logger.info("Sambs cli initialize link sambs cli starting...`n")
-            Invoke-Expression "npm link --force"
-            $logger.info("Sambs cli initialize link sambs cli completed.")
+            $logger.info("Shim sambs cli starting...`n")
+            [string]$scoopPath = (Get-Command scoop -ErrorAction Ignore -ShowCommandInfo).Definition | Split-Path
+            [string]$scoopCoreFilePath = Join-Path -Path $scoopPath -ChildPath '../apps/scoop/current/lib/core.ps1'
+            [string]$sambsFilePath = Join-Path -Path $sambsScriptCliPath -ChildPath '/bin/sambs.ps1'
+            . "$scoopCoreFilePath"
+            shim $sambsFilePath
+            $logger.info("Shim sambs cli completed.")
 
+            # Add yarn vscode sdk
+            $logger.info("Add yarn vscode sdk starting...`n")
+            Invoke-Expression "yarn dlx @yarnpkg/sdks vscode"
+            $logger.info("Add yarn vscode sdk completed.")
             Pop-Location
-            $logger.info("Sambs cli initialize completed.")
+
+            $logger.info("Sambs repo initialize completed.")
 
             $logger.debug('Completed.')
         } catch {

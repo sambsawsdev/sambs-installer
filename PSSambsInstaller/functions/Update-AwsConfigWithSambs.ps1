@@ -18,17 +18,17 @@ function Update-AwsConfigWithSambs {
                 throw 'Aws-sso-util is required to updated aws config with sambs dev profile.'
             }
 
-            # Get the sambsDevProfileConfig
-            [SambsDevProfileConfig]$sambsDevProfileConfig = Get-SambsDevProfileConfig            
+            # Get the devProfileConfig
+            [DevProfileConfig]$devProfileConfig = Get-DevProfileConfig            
 
             # Save the aws config
             $logger.info("Aws config update starting...`n")
-            $sambsDevProfileConfig | Get-Member -MemberType Properties | ForEach-Object {
-                Invoke-Expression "aws configure set $($_.Name) $($sambsDevProfileConfig.$($_.Name)) --profile $($sambsDevProfileConfig.name)"
+            $devProfileConfig | Get-Member -MemberType Properties | ForEach-Object {
+                Invoke-Expression "aws configure set $($_.Name) $($devProfileConfig.$($_.Name)) --profile $($devProfileConfig.name)"
             }
 
             # Configure the aws-sso-util
-            Invoke-Expression "aws-sso-util configure profile $($sambsDevProfileConfig.name)"
+            Invoke-Expression "aws-sso-util configure profile $($devProfileConfig.name)"
             $logger.info("Aws config update completed.")
 
             $logger.debug("Completed.")

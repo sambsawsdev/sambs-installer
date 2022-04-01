@@ -46,6 +46,81 @@ Process {
             [System.Environment]::SetEnvironmentVariable('sambsHome', $null, 'User')
             $logger.info('Removing sambsHome completed.')
 
+            $logger.info('Removing sambs repo starting...')
+            $installConfig = Get-InstallConfig
+            if ( Test-Path -LiteralPath $installConfig.repoPath -PathType Container ) {
+                # Remove sambs-monorepo
+                [string]$repoPath = Join-Path -Path $installConfig.repoPath -ChildPath '/sambs-monorepo'
+                if ( Test-Path -LiteralPath $repoPath -PathType Container ) {
+                    $null = Remove-Item -Path $repoPath -Recurse -Force
+                }
+                # Remove sambs-instler
+                [string]$repoPath = Join-Path -Path $installConfig.repoPath -ChildPath '/sambs-installer'
+                if ( Test-Path -LiteralPath $repoPath -PathType Container ) {
+                    $null = Remove-Item -Path $repoPath -Recurse -Force
+                }
+                # Remove sambs-instler
+                [string]$repoPath = Join-Path -Path $installConfig.repoPath -ChildPath '/sambs-scoop'
+                if ( Test-Path -LiteralPath $repoPath -PathType Container ) {
+                    $null = Remove-Item -Path $repoPath -Recurse -Force
+                }
+            }
+            $logger.info('Removing sambs repo completed.')
+
+            # Todo: Find a better way of the below
+            # Remove other paths 
+            $logger.info('Removing other paths starting...')
+            # .aws
+            [string]$removePath = Join-Path -Path $HOME -ChildPath '/.aws'
+            if ( Test-Path -LiteralPath $removePath -PathType Container ) {
+                $logger.info("Removing $removePath")
+                $null = Remove-Item -Path $removePath -Recurse -Force
+            }
+            # .config
+            [string]$removePath = Join-Path -Path $HOME -ChildPath '/.config'
+            if ( Test-Path -LiteralPath $removePath -PathType Container ) {
+                $logger.info("Removing $removePath")
+                $null = Remove-Item -Path $removePath -Recurse -Force
+            }
+            # .vscode
+            $removePath = Join-Path -Path $HOME -ChildPath '/.vscode'
+            if ( Test-Path -LiteralPath $removePath -PathType Container ) {
+                $logger.info("Removing $removePath")
+                $null = Remove-Item -Path $removePath -Recurse -Force
+            }
+            # .gitconfig
+            $removePath = Join-Path -Path $HOME -ChildPath '.gitconfig'
+            if ( Test-Path -LiteralPath $removePath -PathType Leaf ) {
+                $logger.info("Removing $removePath")
+                $null = Remove-Item -Path $removePath -Force
+            }
+            # pip             
+            $removePath = Join-Path -Path ([System.Environment]::GetFolderPath('LocalApplicationData')) -ChildPath '/pip'
+            if ( Test-Path -LiteralPath $removePath -PathType Container ) {
+                $logger.info("Removing $removePath")
+                $null = Remove-Item -Path $removePath -Recurse -Force
+            }
+            # yarn
+            $removePath = Join-Path -Path ([System.Environment]::GetFolderPath('LocalApplicationData')) -ChildPath '/yarn'
+            if ( Test-Path -LiteralPath $removePath -PathType Container ) {
+                $logger.info("Removing $removePath")
+                $null = Remove-Item -Path $removePath -Recurse -Force
+            }
+            # npm-cache
+            $removePath = Join-Path -Path ([System.Environment]::GetFolderPath('ApplicationData')) -ChildPath '/npm-cache'
+            if ( Test-Path -LiteralPath $removePath -PathType Container ) {
+                $logger.info("Removing $removePath")
+                $null = Remove-Item -Path $removePath -Recurse -Force
+            }
+            # Scoop Start Menu
+            $removePath = Join-Path -Path ([System.Environment]::GetFolderPath('ApplicationData')) -ChildPath '/Microsoft/Windows/Start Menu/Programs/Scoop Apps'
+            if ( Test-Path -LiteralPath $removePath -PathType Container ) {
+                $logger.info("Removing $removePath")
+                $null = Remove-Item -Path $removePath -Recurse -Force
+            }
+
+            $logger.info('Removing other paths completed.')
+
 
             # Cleanup path
             $logger.info('Removing sambs from the path starting...')

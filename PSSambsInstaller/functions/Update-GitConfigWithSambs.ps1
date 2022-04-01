@@ -13,25 +13,27 @@ function Update-GitConfigWithSambs {
                 throw 'Git is required to update git config with sambs config.'
             }
 
-            # Get the sambsConfig
-            [SambsConfig]$sambsConfig = Get-SambsConfig            
+            # Get the installConfig
+            #[InstallConfig]$installConfig = Get-InstallConfig            
+            $installConfig = Get-InstallConfig            
 
-            # Save the sambsConfig to Git
+            # Save the installConfig to Git
             $logger.info("Git user config update starting...`n")
-            Invoke-Expression "git config --global user.email `"$($sambsConfig.email)`""
-            Invoke-Expression "git config --global user.name `"$($sambsConfig.fullName)`""
+            Invoke-Expression "git config --global user.email `"$($installConfig.email)`""
+            Invoke-Expression "git config --global user.name `"$($installConfig.fullName)`""
             $logger.info("Git user config update completed.")
 
-            # Get the sambsDevProfileConfig
-            [SambsDevProfileConfig]$sambsDevProfileConfig = Get-SambsDevProfileConfig           
+            # Get the devProfileConfig
+            [DevProfileConfig]$devProfileConfig = Get-DevProfileConfig           
 
             # Save the credential manager
             $logger.info("Git credential config update starting...`n")
-            Invoke-Expression "git config --global credential.https://git-codecommit.$($sambsDevProfileConfig.sso_region).amazonaws.com.helper '!aws --profile $($sambsDevProfileConfig.name) codecommit credential-helper $@'"
-            Invoke-Expression "git config --global credential.https://git-codecommit.$($sambsDevProfileConfig.sso_region).amazonaws.com.UseHttpPath true"
+            Invoke-Expression "git config --global credential.https://git-codecommit.$($devProfileConfig.sso_region).amazonaws.com.helper '!aws --profile $($devProfileConfig.name) codecommit credential-helper $@'"
+            Invoke-Expression "git config --global credential.https://git-codecommit.$($devProfileConfig.sso_region).amazonaws.com.UseHttpPath true"
             
             # Todo: Should we set this??
             Invoke-Expression "git config --global credential.https://github.com.helper manager-core"
+            Invoke-Expression "git config --global pull.rebase false"
             $logger.info("Git credential config update completed.")
 
             $logger.debug("Completed.")
