@@ -47,20 +47,20 @@ Process {
             $logger.info('Removing sambsHome completed.')
 
             $logger.info('Removing sambs repo starting...')
-            $sambsConfig = Get-SambsConfig
-            if ( Test-Path -LiteralPath $sambsConfig.repoPath -PathType Container ) {
+            $installConfig = Get-InstallConfig
+            if ( Test-Path -LiteralPath $installConfig.repoPath -PathType Container ) {
                 # Remove sambs-monorepo
-                [string]$repoPath = Join-Path -Path $sambsConfig.repoPath -ChildPath '/sambs-monorepo'
+                [string]$repoPath = Join-Path -Path $installConfig.repoPath -ChildPath '/sambs-monorepo'
                 if ( Test-Path -LiteralPath $repoPath -PathType Container ) {
                     $null = Remove-Item -Path $repoPath -Recurse -Force
                 }
                 # Remove sambs-instler
-                [string]$repoPath = Join-Path -Path $sambsConfig.repoPath -ChildPath '/sambs-installer'
+                [string]$repoPath = Join-Path -Path $installConfig.repoPath -ChildPath '/sambs-installer'
                 if ( Test-Path -LiteralPath $repoPath -PathType Container ) {
                     $null = Remove-Item -Path $repoPath -Recurse -Force
                 }
                 # Remove sambs-instler
-                [string]$repoPath = Join-Path -Path $sambsConfig.repoPath -ChildPath '/sambs-scoop'
+                [string]$repoPath = Join-Path -Path $installConfig.repoPath -ChildPath '/sambs-scoop'
                 if ( Test-Path -LiteralPath $repoPath -PathType Container ) {
                     $null = Remove-Item -Path $repoPath -Recurse -Force
                 }

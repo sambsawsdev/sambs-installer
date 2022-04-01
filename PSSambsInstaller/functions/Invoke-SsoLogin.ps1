@@ -26,8 +26,8 @@ Where:
 
             # Get the ssoProfile from sambs dev profile config
             if ([string]::IsNullOrWhiteSpace($ssoProfile)) {
-                [SambsDevProfileConfig]$sambsDevProfileConfig = Get-SambsDevProfileConfig
-                $ssoProfile = $sambsDevProfileConfig.name
+                [DevProfileConfig]$devProfileConfig = Get-DevProfileConfig
+                $ssoProfile = $devProfileConfig.name
             }
 
             # Show help

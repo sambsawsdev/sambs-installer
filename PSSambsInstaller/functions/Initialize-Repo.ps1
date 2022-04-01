@@ -10,9 +10,9 @@ function Initialize-Repo {
             $logger.debug("Starting. [$repoPath, $arguments]")
 
             # Get the existing config
-            #[SambsConfig]$sambsConfig = Get-SambsConfig
-            $sambsConfig = Get-SambsConfig
-            [string]$repoPath = Join-Path -Path $sambsConfig.repoPath -ChildPath '/sambs-monorepo'
+            #[InstallConfig]$installConfig = Get-InstallConfig
+            $installConfig = Get-InstallConfig
+            [string]$repoPath = Join-Path -Path $installConfig.repoPath -ChildPath '/sambs-monorepo'
 
             # Ensure repo is installed
             if (-not (Test-RepoInstalled -repoPath $repoPath) ) {

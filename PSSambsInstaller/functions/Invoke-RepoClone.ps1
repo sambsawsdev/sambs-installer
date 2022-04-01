@@ -30,20 +30,20 @@ function Invoke-RepoClone {
 
             $logger.info("Sambs repo clone starting...`n")
             # Get the sambs config
-            #[SambsConfig]$sambsConfig = Get-SambsConfig
-            $sambsConfig = Get-SambsConfig
+            #[InstallConfig]$installConfig = Get-InstallConfig
+            $installConfig = Get-InstallConfig
             
             # Ensure the path exists
-            if ( -not ( Test-Path -LiteralPath $sambsConfig.repoPath -PathType Container ) ) {
-                $null = New-Item -Path $sambsConfig.repoPath -ItemType Directory -Force
-                #throw "Can't find destination path '$($sambsConfig.repoPath)'"
+            if ( -not ( Test-Path -LiteralPath $installConfig.repoPath -PathType Container ) ) {
+                $null = New-Item -Path $installConfig.repoPath -ItemType Directory -Force
+                #throw "Can't find destination path '$($installConfig.repoPath)'"
             }
 
-            Push-Location -LiteralPath $sambsConfig.repoPath
-            $sambsConfig.repoPath = Get-Location
+            Push-Location -LiteralPath $installConfig.repoPath
+            $installConfig.repoPath = Get-Location
 
             # Ensure repo not already cloned
-            [string]$repoPath = Join-Path -Path $sambsConfig.repoPath -ChildPath '/sambs-monorepo'
+            [string]$repoPath = Join-Path -Path $installConfig.repoPath -ChildPath '/sambs-monorepo'
             if ( Test-Path -LiteralPath $repoPath -PathType Container ) {
                 $logger.info("Repo path already exists '$repoPath'")
             } else {
@@ -52,8 +52,8 @@ function Invoke-RepoClone {
                 # Login to aws
                 Invoke-SsoLogin
 
-                #[SambsDevProfileConfig]$sambsDevProfileConfig = Get-SambsDevProfileConfig
-                $sambsDevProfileConfig = Get-SambsDevProfileConfig
+                #[DevProfileConfig]$devProfileConfig = Get-DevProfileConfig
+                $devProfileConfig = Get-DevProfileConfig
                 # Todo: Check git-remote-codecommit,  and git installed
                 Invoke-Expression "git clone https://git-codecommit.eu-west-1.amazonaws.com/v1/repos/MonorepoRepository $repoPath"
                 # Initialize the repo
@@ -63,7 +63,7 @@ function Invoke-RepoClone {
             
 
             # Clone the sambs-installer repo
-            [string]$repoPath = Join-Path -Path $sambsConfig.repoPath -ChildPath '/sambs-installer'
+            [string]$repoPath = Join-Path -Path $installConfig.repoPath -ChildPath '/sambs-installer'
             # Ensure repo not already cloned
             if ( Test-Path -LiteralPath $repoPath -PathType Container ) {
                 $logger.info("Repo path already exists '$repoPath'")
@@ -73,7 +73,7 @@ function Invoke-RepoClone {
                 $logger.info("Sambs repo clone sambs-installer completed.")
             }
             # Clone the sambs-scoop repo
-            [string]$repoPath = Join-Path -Path $sambsConfig.repoPath -ChildPath '/sambs-scoop'
+            [string]$repoPath = Join-Path -Path $installConfig.repoPath -ChildPath '/sambs-scoop'
             # Ensure repo not already cloned
             if ( Test-Path -LiteralPath $repoPath -PathType Container ) {
                 $logger.info("Repo path already exists '$repoPath'")
